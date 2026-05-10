@@ -1,4 +1,4 @@
-package com.example.presensiapi.model;
+package com.example.phonebooksapi.model;
 
 import jakarta.persistence.*;
 

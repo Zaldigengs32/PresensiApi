@@ -1,6 +1,6 @@
-package com.example.presensiapi.repository;
+package com.example.phonebooksapi.repository;
 
-import com.example.presensiapi.model.Mahasiswa;
+import com.example.phonebooksapi.model.Mahasiswa;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MahasiswaRepository extends JpaRepository<Mahasiswa, String> {

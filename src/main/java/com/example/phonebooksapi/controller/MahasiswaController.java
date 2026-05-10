@@ -1,7 +1,7 @@
-package com.example.presensiapi.controller;
+package com.example.phonebooksapi.controller;
 
-import com.example.presensiapi.model.Mahasiswa;
-import com.example.presensiapi.repository.MahasiswaRepository;
+import com.example.phonebooksapi.model.Mahasiswa;
+import com.example.phonebooksapi.repository.MahasiswaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -57,7 +57,7 @@ public class MahasiswaController {
             Mahasiswa mhs = repository.findById(nim).orElse(new Mahasiswa());
             mhs.setNimMhs(nim.trim());
             mhs.setNamaMhs(nama.trim());
-                mhs.setFotoMhs(file.getBytes());
+            mhs.setFotoMhs(file.getBytes());
 
             repository.save(mhs);
             return ResponseEntity.ok("Data mahasiswa dengan NIM " + nim + " berhasil diperbarui");
