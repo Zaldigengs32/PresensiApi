@@ -5,6 +5,7 @@ import com.example.presensiapi.dto.PresensiRequest;
 import com.example.presensiapi.dto.PresensiUpdateRequest;
 import com.example.presensiapi.model.Presensi;
 import com.example.presensiapi.repository.PresensiRepository;
+import com.example.presensiapi.service.GeoService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,15 +13,19 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/presensi")
 @CrossOrigin(origins = "*")
 public class PresensiController {
 
     private final PresensiRepository repository;
+    private final GeoService geoService;
 
-    public PresensiController(PresensiRepository repository) {
+    public PresensiController(PresensiRepository repository, GeoService geoService) {
         this.repository = repository;
+        this.geoService = geoService;
     }
 
     @GetMapping("/history/{nim}")
@@ -66,5 +71,15 @@ public class PresensiController {
             p.setJamPresensi(request.getJamPresensi());
             return ResponseEntity.ok(repository.save(p));
         }).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/locate")
+    public String checkLocation(@RequestBody Map<String, Object> request) {
+        double lat = Double.parseDouble(request.get("lat").toString());
+        double lng = Double.parseDouble(request.get("lng").toString());
+
+        boolean inside = geoService.isInside(lat, lng);
+
+        return inside ? "IN AREA" : "OUT AREA";
     }
 }
